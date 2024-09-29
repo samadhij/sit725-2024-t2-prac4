@@ -9,8 +9,8 @@
 }
 
 .main-body {
-    background-color: #F28487;
-    color: white;
+    background-color: #FFFFFF;
+    color: red;
     height: calc(100vh - 64px);
 }
 
@@ -22,4 +22,32 @@
 .click-me-button {
     background-color: #EE6E73;
     margin-top: 50px;
+}
+
+/* Banner styling */
+.banner {
+    background-image: url('../images/food.jpg');
+    /* Replace with a suitable image URL */
+    background-size: cover;
+    background-position: center;
+    height: 60vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.banner-content {
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.banner h1,
+.banner p {
+    color: white;
+}
+
+.container {
+    margin-top: 42px;
 }

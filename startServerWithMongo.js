@@ -8,7 +8,7 @@ let collection;
 
 app.use(express.static(__dirname + '/public'))
 app.use(express.json());
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({ extended: false }));
 
 const client = new MongoClient(uri, {
     serverApi: {
@@ -22,43 +22,45 @@ const client = new MongoClient(uri, {
 async function runDBConnection() {
     try {
         await client.connect();
-        collection = client.db().collection('Cat');
+        collection = client.db().collection('Cuisines');
         console.log(collection);
-    } catch(ex) {
+        console.log("Connected to DB");
+    } catch (ex) {
         console.error(ex);
     }
 }
 
-app.get('/', function (req,res) {
-    res.render('indexMongo.html');
+app.get('/', function (req, res) {
+    res.sendFile(__dirname + '/public/indexMongo.html');
 });
 
-app.get('/api/cats', (req,res) => {
-    getAllCats((err,result)=>{
+app.get('/api/cuisines', (req, res) => {
+    getAllCuisines((err, result) => {
         if (!err) {
-            res.json({statusCode:200, data:result, message:'get all cats successful'});
+            res.json({ statusCode: 200, data: result, message: 'get all cuisines successful' });
         }
     });
 });
 
-app.post('/api/cat', (req,res)=>{
-    let cat = req.body;
-    postCat(cat, (err, result) => {
+app.post('/api/cuisine', (req, res) => {
+    let cuisine = req.body;
+    postCuisine(cuisine, (err, result) => {
         if (!err) {
-            res.json({statusCode:201, data:result, message:'success'});
+            res.json({ statusCode: 201, data: result, message: 'success' });
         }
     });
 });
 
-function postCat(cat,callback) {
-    collection.insertOne(cat,callback);
+function postCuisine(cuisine, callback) {
+    collection.insertOne(cuisine, callback);
 }
 
-function getAllCats(callback){
+function getAllCuisines(callback) {
     collection.find({}).toArray(callback);
 }
 
-app.listen(port, ()=>{
+app.listen(port, () => {
     console.log('express server started');
+    console.log('Server is running on port ' + port);
     runDBConnection();
 });
